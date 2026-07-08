@@ -1,0 +1,81 @@
+-- =========================================================
+-- CRISTALLO MÁRMORES & GRANITOS — SETUP DO BANCO (Supabase)
+-- Cole tudo isso no SQL Editor do seu projeto e clique em "Run"
+-- =========================================================
+
+-- 0) Remove qualquer tabela "produtos" antiga com esquema diferente
+--    (seguro aqui porque é uma tabela nova, só pra essa demonstração)
+drop table if exists produtos cascade;
+
+-- 1) Tabela de produtos (tipos de mármore/granito)
+create table produtos (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null,
+  tipo text not null,               -- ex: 'Mármore' ou 'Granito'
+  origem text,                      -- ex: 'Itália', 'Espírito Santo - BR'
+  cor_predominante text,
+  preco_m2 numeric(10,2) not null,
+  descricao text,
+  imagem_keyword text not null,     -- usada para casar com o nome do arquivo no Storage
+  destaque boolean default false,
+  ordem integer default 0,
+  created_at timestamptz default now()
+);
+
+-- 2) Ativa Row Level Security
+alter table produtos enable row level security;
+
+-- 3) Política: qualquer visitante do site pode LER os produtos
+--    (mas ninguém de fora consegue inserir/editar/apagar)
+drop policy if exists "Leitura publica de produtos" on produtos;
+create policy "Leitura publica de produtos"
+  on produtos for select
+  using (true);
+
+-- 4) Dados de exemplo — ligados às imagens que você já subiu
+--    (marble-calacatta, marble-emperador, marble-nero, marble-rosa,
+--     marble-travertino, marble-verde)
+insert into produtos (nome, tipo, origem, cor_predominante, preco_m2, descricao, imagem_keyword, destaque, ordem)
+values
+('Calacatta Gold', 'Mármore', 'Itália', 'Branco com veios dourados', 890.00,
+ 'Mármore italiano de altíssimo padrão, veios dourados marcantes. Ideal para bancadas e revestimentos de destaque.',
+ 'calacatta', true, 1),
+
+('Emperador Marrom', 'Mármore', 'Espanha', 'Marrom com veios claros', 690.00,
+ 'Elegância clássica em tom marrom profundo, muito usado em pisos e bancadas de cozinhas sofisticadas.',
+ 'emperador', false, 2),
+
+('Nero Marquina', 'Mármore', 'Espanha', 'Preto com veios brancos', 750.00,
+ 'Preto intenso com veios finos brancos. Ótimo contraste para ambientes modernos.',
+ 'nero', false, 3),
+
+('Rosa Aurora', 'Mármore', 'Espírito Santo - BR', 'Rosa claro', 420.00,
+ 'Mármore nacional com tom rosado suave, ótimo custo-benefício para banheiros e lavabos.',
+ 'rosa', false, 4),
+
+('Travertino Romano', 'Mármore', 'Itália', 'Bege claro', 380.00,
+ 'Textura porosa característica e tom bege uniforme. Clássico em fachadas e áreas externas.',
+ 'travertino', false, 5),
+
+('Verde Ubatuba', 'Granito', 'Espírito Santo - BR', 'Verde escuro', 460.00,
+ 'Granito nacional resistente, tom verde escuro quase preto. Muito usado em bancadas de cozinha.',
+ 'verde', true, 6)
+on conflict do nothing;
+
+-- =========================================================
+-- Pronto! Depois de rodar, confirme em Table Editor > produtos
+-- que as 6 linhas foram criadas.
+-- =========================================================
+
+-- =========================================================
+-- 5) LIBERA A LISTAGEM DO BUCKET DE IMAGENS
+--    Marcar o bucket como "Public" libera o download direto de
+--    cada arquivo, mas NÃO libera a operação de listar os arquivos
+--    (usada pelo site pra casar cada produto com a imagem certa).
+--    Sem essa política, o site cai sempre na imagem de reserva.
+-- =========================================================
+drop policy if exists "Leitura publica de arquivos - galeria-marmore" on storage.objects;
+create policy "Leitura publica de arquivos - galeria-marmore"
+  on storage.objects for select
+  to public
+  using ( bucket_id = 'galeria-marmore' );
