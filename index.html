@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cristallo Mármores &amp; Granitos | Rio Branco - AC</title>
+<meta name="description" content="Mármores e granitos importados e nacionais em Rio Branco - AC. Consulte modelos, tamanhos e valores por m² e venha conhecer nossa loja.">
+
+<!-- ====== OPEN GRAPH (pré-visualização ao compartilhar no WhatsApp) ======
+     IMPORTANTE: troque SEU-PROJETO.supabase.co abaixo pela URL real do seu
+     projeto assim que ele estiver publicado (Vercel), senão o WhatsApp não
+     vai achar a imagem de capa. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cristallo Mármores & Granitos">
+<meta property="og:description" content="Conheça nossos modelos de mármore e granito, tamanhos e valores por m². Fale com a gente pelo WhatsApp.">
+<meta property="og:image" content="https://SEU-PROJETO.supabase.co/storage/v1/object/public/galeria-marmore/suite-banho-master-pia-de-marmore.jpg">
+<meta property="og:url" content="https://cristallo-marmores.vercel.app">
+<meta name="theme-color" content="#17140F">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --stone-black:#17140F;
+    --stone-black-2:#211C15;
+    --stone-white:#F1ECE3;
+    --stone-white-2:#E7E0D2;
+    --brass:#A6813F;
+    --brass-light:#D4B876;
+    --taupe:#B7AC98;
+    --ink:#2B2620;
+    --radius:2px;
+    --max:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--stone-white);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(23,20,15,.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(212,184,118,.2);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    color:var(--stone-white);
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    letter-spacing:.04em;
+  }
+  .logo span{color:var(--brass-light);}
+  nav.links{display:flex;gap:32px;}
+  nav.links a{
+    color:var(--stone-white);
+    font-size:14px;
+    opacity:.85;
+    transition:opacity .2s;
+  }
+  nav.links a:hover{opacity:1;color:var(--brass-light);}
+  .nav-cta{
+    display:flex;align-items:center;gap:20px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;
+    border-radius:var(--radius);
+    font-size:14px;font-weight:500;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-brass{background:var(--brass);color:#1a1509;}
+  .btn-brass:hover{background:var(--brass-light);}
+  .btn-outline{border-color:rgba(241,236,227,.4);color:var(--stone-white);}
+  .btn-outline:hover{border-color:var(--brass-light);color:var(--brass-light);}
+  .hamburger{display:none;background:none;border:0;color:var(--stone-white);font-size:26px;cursor:pointer;}
+
+  .mobile-menu{
+    position:fixed;inset:0;background:var(--stone-black);z-index:200;
+    display:none;flex-direction:column;padding:24px;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu .close-btn{align-self:flex-end;background:none;border:0;color:var(--stone-white);font-size:28px;}
+  .mobile-menu a{color:var(--stone-white);font-family:'Fraunces',serif;font-size:26px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;align-items:flex-end;
+    background:linear-gradient(180deg, rgba(23,20,15,.35), rgba(23,20,15,.92)), url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    color:var(--stone-white);
+    padding-top:68px;
+  }
+  .hero-inner{padding-bottom:88px;max-width:720px;}
+  .hero h1{
+    font-size:clamp(38px,6vw,64px);
+    line-height:1.05;
+    margin:18px 0 20px;
+  }
+  .hero p{
+    font-size:17px;
+    color:var(--taupe);
+    max-width:520px;
+    margin-bottom:34px;
+    line-height:1.6;
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;}
+
+  /* ---------- VEIN DIVIDER (signature element) ---------- */
+  .vein{display:block;width:100%;height:64px;}
+  .vein path{stroke:var(--brass);stroke-width:1;fill:none;opacity:.55;}
+  .vein.on-dark{background:var(--stone-black);}
+  .vein.on-light{background:var(--stone-white);}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:600px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(28px,4vw,40px);margin-top:10px;}
+  .section-head p{color:#5b5347;margin-top:14px;line-height:1.6;}
+
+  /* ---------- CATALOG ---------- */
+  #catalogo{background:var(--stone-white);}
+  .grid-produtos{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:28px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid rgba(43,38,32,.08);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .card .img-wrap{
+    aspect-ratio:4/3;
+    overflow:hidden;background:var(--stone-white-2);
+    position:relative;
+  }
+  .card .img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .card:hover .img-wrap img{transform:scale(1.06);}
+  .badge{
+    position:absolute;top:12px;left:12px;
+    background:rgba(23,20,15,.82);color:var(--brass-light);
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    padding:4px 10px;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .card-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .card-body h3{font-size:21px;}
+  .card-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#7a7264;letter-spacing:.02em;}
+  .card-desc{font-size:14px;color:#5b5347;line-height:1.55;flex:1;}
+  .card-price{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding-top:12px;border-top:1px solid rgba(43,38,32,.08);
+  }
+  .price-value{font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--brass);font-weight:500;}
+  .price-label{font-size:11px;color:#8a8274;text-transform:uppercase;letter-spacing:.06em;}
+  .card-actions{display:flex;gap:10px;margin-top:14px;}
+  .card-actions .btn{flex:1;justify-content:center;padding:9px 10px;font-size:13px;}
+  .btn-ghost{background:var(--stone-white-2);color:var(--ink);}
+  .btn-ghost:hover{background:#ddd3c0;}
+
+  /* ---------- AMBIENTES (galeria) ---------- */
+  #ambientes{background:var(--stone-black);color:var(--stone-white);}
+  #ambientes .section-head p{color:var(--taupe);}
+  .grid-ambientes{
+    columns:3 260px;
+    column-gap:18px;
+  }
+  .grid-ambientes figure{
+    margin:0 0 18px;break-inside:avoid;
+    cursor:zoom-in;overflow:hidden;position:relative;
+  }
+  .grid-ambientes img{width:100%;display:block;transition:transform .5s ease;}
+  .grid-ambientes figure:hover img{transform:scale(1.04);}
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(10,9,6,.92);
+    display:none;align-items:center;justify-content:center;z-index:300;
+    padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-height:88vh;max-width:100%;}
+  .lightbox .close-lb{position:absolute;top:24px;right:28px;color:#fff;font-size:32px;background:none;border:0;cursor:pointer;}
+
+  /* ---------- LOCALIZAÇÃO ---------- */
+  #local{background:var(--stone-white-2);}
+  .local-grid{
+    display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:stretch;
+  }
+  .local-info{display:flex;flex-direction:column;gap:22px;}
+  .info-row{display:flex;gap:16px;}
+  .info-row .icon{
+    width:40px;height:40px;flex:none;border-radius:50%;
+    background:var(--stone-black);color:var(--brass-light);
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+  .info-row h4{font-family:'Fraunces',serif;font-size:16px;margin-bottom:4px;}
+  .info-row p{margin:0;font-size:14px;color:#5b5347;line-height:1.5;}
+  .map-frame{border:0;width:100%;min-height:340px;filter:grayscale(.15) contrast(1.05);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--stone-black);color:var(--taupe);padding:56px 0 28px;}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .foot-grid .logo{margin-bottom:10px;}
+  footer .foot-note{font-size:13px;margin-top:24px;color:#7a7264;}
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float{
+    position:fixed;bottom:24px;right:24px;z-index:150;
+    width:58px;height:58px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.28);
+    font-size:28px;color:#fff;
+  }
+  .wa-float:hover{transform:scale(1.06);}
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width:860px){
+    nav.links{display:none;}
+    .nav-cta .btn-outline{display:none;}
+    .hamburger{display:block;}
+    .local-grid{grid-template-columns:1fr;}
+    .grid-ambientes{columns:2 200px;}
+  }
+  @media (max-width:520px){
+    section{padding:64px 0;}
+    .grid-ambientes{columns:1;}
+    .hero-inner{padding-bottom:56px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">CRISTALLO <span>&middot;</span> Mármores &amp; Granitos</div>
+    <nav class="links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#ambientes">Ambientes</a>
+      <a href="#local">Localização</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-outline" href="#local">Onde estamos</a>
+      <a class="btn btn-brass" id="wa-header" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      <button class="hamburger" id="openMenu" aria-label="Abrir menu">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeMenu" aria-label="Fechar menu">&times;</button>
+  <a href="#catalogo">Catálogo</a>
+  <a href="#ambientes">Ambientes</a>
+  <a href="#local">Localização</a>
+  <a id="wa-mobile" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</div>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Rio Branco &middot; Acre</span>
+    <h1>Mármore e granito<br>com a marca da sua obra.</h1>
+    <p>Peças selecionadas, tamanhos sob medida e valores claros por m². Veja o catálogo completo e venha conhecer as chapas de perto.</p>
+    <div class="hero-actions">
+      <a class="btn btn-brass" href="#catalogo">Ver catálogo</a>
+      <a class="btn btn-outline" id="wa-hero" href="#" target="_blank" rel="noopener">Pedir orçamento</a>
+    </div>
+  </div>
+</section>
+
+<svg class="vein on-light" viewBox="0 0 1180 64" preserveAspectRatio="none">
+  <path d="M0 32 C 150 10, 260 55, 400 30 S 620 5, 760 34 850 60 980 28 1180 36"/>
+  <path d="M300 30 C 330 15, 350 45, 380 25" stroke-width=".6"/>
+  <path d="M820 34 C 850 50, 880 20, 910 38" stroke-width=".6"/>
+</svg>
+
+<section id="catalogo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Catálogo</span>
+      <h2>Modelos disponíveis</h2>
+      <p>Todos os valores são por metro quadrado (m²) e servem como referência para orçamento. Fale com a gente para medidas exatas e disponibilidade em estoque.</p>
+    </div>
+    <div class="grid-produtos" id="grid-produtos">
+      <!-- cartões preenchidos via Supabase (ver script no fim do arquivo) -->
+    </div>
+  </div>
+</section>
+
+<svg class="vein on-dark" viewBox="0 0 1180 64" preserveAspectRatio="none">
+  <path d="M0 30 C 140 55, 280 8, 420 32 S 640 58, 780 30 900 6 1040 34 1180 28"/>
+  <path d="M500 30 C 530 45, 560 15, 590 32" stroke-width=".6"/>
+</svg>
+
+<section id="ambientes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Inspiração</span>
+      <h2>Ambientes com nossas peças</h2>
+      <p>Uma amostra de cozinhas, lavabos e suítes com bancadas e revestimentos em mármore. Clique numa foto para ampliar.</p>
+    </div>
+    <div class="grid-ambientes" id="grid-ambientes">
+      <!-- imagens preenchidas via Supabase Storage -->
+    </div>
+  </div>
+</section>
+
+<svg class="vein on-light" viewBox="0 0 1180 64" preserveAspectRatio="none">
+  <path d="M0 34 C 160 8, 300 58, 440 30 S 660 4, 800 32 920 60 1060 26 1180 34"/>
+</svg>
+
+<section id="local">
+  <div class="wrap local-grid">
+    <div class="local-info">
+      <span class="eyebrow">Visite a loja</span>
+      <h2 style="margin-bottom:8px;">Onde estamos</h2>
+      <div class="info-row">
+        <div class="icon">&#128205;</div>
+        <div>
+          <h4>Endereço</h4>
+          <p>Av. Ceará, 1420 &mdash; Bosque<br>Rio Branco - AC, 69900-000</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="icon">&#128337;</div>
+        <div>
+          <h4>Horário de atendimento</h4>
+          <p>Segunda a sexta: 8h às 18h<br>Sábado: 8h às 12h</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="icon">&#128222;</div>
+        <div>
+          <h4>WhatsApp</h4>
+          <p>(68) 99999-1234</p>
+        </div>
+      </div>
+      <a class="btn btn-brass" style="align-self:flex-start;" id="wa-local" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </div>
+    <iframe class="map-frame" loading="lazy"
+      src="https://www.google.com/maps?q=Av.+Cear%C3%A1,+Rio+Branco+-+AC&output=embed">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">CRISTALLO <span>&middot;</span> Mármores &amp; Granitos</div>
+        <p style="max-width:340px;font-size:14px;">Av. Ceará, 1420 &mdash; Bosque, Rio Branco - AC</p>
+      </div>
+      <div>
+        <p class="mono" style="font-size:13px;">(68) 99999-1234<br>contato@cristallomarmores.com.br</p>
+      </div>
+    </div>
+    <p class="foot-note">&copy; 2026 Cristallo Mármores &amp; Granitos &mdash; site demonstrativo.</p>
+  </div>
+</footer>
+
+<a class="wa-float" id="wa-float" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">&#128172;</a>
+
+<div class="lightbox" id="lightbox">
+  <button class="close-lb" id="closeLb">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — preencha com os dados do SEU projeto Supabase
+   (Settings > API no painel do Supabase)
+   ========================================================= */
+const SUPABASE_URL = "https://SEU-PROJETO.supabase.co"; // <-- troque aqui
+const SUPABASE_ANON_KEY = "sb_publishable_phzH6NGVyTD64V6iEV8A6w_S9C6b0eA";
+const BUCKET = "galeria-marmore";
+const SITE_URL = "https://cristallo-marmores.vercel.app"; // <-- troque quando publicar
+const WHATSAPP_NUMBER = "5568999991234"; // formato: código do país + DDD + número, só dígitos
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1615874959474-d609969a20ed?q=80&w=800&auto=format&fit=crop";
+
+function waLink(text){
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+// Links padrão do header / hero / rodapé / botão flutuante
+document.addEventListener("DOMContentLoaded", () => {
+  const genericMsg = "Olá! Vi o site da Cristallo Mármores e gostaria de mais informações.";
+  ["wa-header","wa-hero","wa-local","wa-float","wa-mobile"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.href = waLink(genericMsg);
+  });
+
+  // menu mobile
+  document.getElementById("openMenu").addEventListener("click", ()=>{
+    document.getElementById("mobileMenu").classList.add("open");
+  });
+  document.getElementById("closeMenu").addEventListener("click", ()=>{
+    document.getElementById("mobileMenu").classList.remove("open");
+  });
+
+  carregarProdutos();
+  carregarAmbientes();
+});
+
+async function listarArquivosDoBucket(){
+  try{
+    const { data, error } = await db.storage.from(BUCKET).list("", { limit: 100 });
+    if(error) throw error;
+    return data || [];
+  }catch(e){
+    console.error("Erro ao listar bucket:", e);
+    return [];
+  }
+}
+
+function urlPublica(nomeArquivo){
+  const { data } = db.storage.from(BUCKET).getPublicUrl(nomeArquivo);
+  return data.publicUrl;
+}
+
+async function carregarProdutos(){
+  const grid = document.getElementById("grid-produtos");
+  const arquivos = await listarArquivosDoBucket();
+
+  const { data: produtos, error } = await db
+    .from("produtos")
+    .select("*")
+    .order("ordem", { ascending: true });
+
+  if(error || !produtos){
+    grid.innerHTML = `<p>Não foi possível carregar o catálogo agora. Verifique a conexão com o Supabase (SUPABASE_URL).</p>`;
+    console.error(error);
+    return;
+  }
+
+  grid.innerHTML = produtos.map(p => {
+    const arquivoCasado = arquivos.find(a => a.name.toLowerCase().includes(p.imagem_keyword.toLowerCase()));
+    const img = arquivoCasado ? urlPublica(arquivoCasado.name) : FALLBACK_IMG;
+    const preco = Number(p.preco_m2).toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2});
+    const msg = `Olá! Tenho interesse no modelo "${p.nome}" (R$ ${preco}/m²) que vi no site. Podem me passar mais detalhes?`;
+
+    return `
+      <div class="card">
+        <div class="img-wrap">
+          <span class="badge">${p.tipo}</span>
+          <img src="${img}" alt="${p.nome}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>${p.nome}</h3>
+          <div class="card-meta">${p.origem || ""} &middot; ${p.cor_predominante || ""}</div>
+          <p class="card-desc">${p.descricao || ""}</p>
+          <div class="card-price">
+            <span class="price-value">R$ ${preco}</span>
+            <span class="price-label">por m²</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn btn-ghost" href="${waLink(msg)}" target="_blank" rel="noopener">Compartilhar</a>
+            <a class="btn btn-brass" href="${waLink(msg)}" target="_blank" rel="noopener">Pedir orçamento</a>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+async function carregarAmbientes(){
+  const grid = document.getElementById("grid-ambientes");
+  const arquivos = await listarArquivosDoBucket();
+
+  // tudo que NÃO começa com "marble-" entra na galeria de ambientes
+  const ambientes = arquivos.filter(a => !a.name.toLowerCase().startsWith("marble-"));
+
+  if(!ambientes.length){
+    grid.innerHTML = "<p>Galeria de ambientes em breve.</p>";
+    return;
+  }
+
+  grid.innerHTML = ambientes.map(a => {
+    const url = urlPublica(a.name);
+    return `<figure onclick="abrirLightbox('${url}')"><img src="${url}" alt="Ambiente com mármore" loading="lazy"></figure>`;
+  }).join("");
+}
+
+function abrirLightbox(url){
+  document.getElementById("lightbox-img").src = url;
+  document.getElementById("lightbox").classList.add("open");
+}
+document.getElementById("closeLb").addEventListener("click", ()=>{
+  document.getElementById("lightbox").classList.remove("open");
+});
+document.getElementById("lightbox").addEventListener("click", (e)=>{
+  if(e.target.id === "lightbox") e.target.classList.remove("open");
+});
+</script>
+</body>
+</html>
