@@ -364,7 +364,7 @@
         <div class="icon">&#128222;</div>
         <div>
           <h4>WhatsApp</h4>
-          <p>(68) 99230-3038</p>
+          <p>(68) 9230-3038</p>
         </div>
       </div>
       <a class="btn btn-brass" style="align-self:flex-start;" id="wa-local" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
@@ -469,33 +469,63 @@ async function carregarProdutos(){
     return;
   }
 
-  grid.innerHTML = produtos.map(p => {
+  // guarda os dados de cada produto pra usar no compartilhamento com imagem
+  window.produtosCompartilhaveis = produtos.map(p => {
     const arquivoCasado = arquivos.find(a => a.name.toLowerCase().includes(p.imagem_keyword.toLowerCase()));
     const img = arquivoCasado ? urlPublica(arquivoCasado.name) : FALLBACK_IMG;
     const preco = Number(p.preco_m2).toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2});
     const msg = `Olá! Tenho interesse no modelo "${p.nome}" (R$ ${preco}/m²) que vi no site. Podem me passar mais detalhes?`;
+    return { nome: p.nome, tipo: p.tipo, origem: p.origem, cor: p.cor_predominante, desc: p.descricao, img, preco, msg };
+  });
 
-    return `
+  grid.innerHTML = window.produtosCompartilhaveis.map((p, idx) => `
       <div class="card">
         <div class="img-wrap">
           <span class="badge">${p.tipo}</span>
-          <img src="${img}" alt="${p.nome}" loading="lazy">
+          <img src="${p.img}" alt="${p.nome}" loading="lazy">
         </div>
         <div class="card-body">
           <h3>${p.nome}</h3>
-          <div class="card-meta">${p.origem || ""} &middot; ${p.cor_predominante || ""}</div>
-          <p class="card-desc">${p.descricao || ""}</p>
+          <div class="card-meta">${p.origem || ""} &middot; ${p.cor || ""}</div>
+          <p class="card-desc">${p.desc || ""}</p>
           <div class="card-price">
-            <span class="price-value">R$ ${preco}</span>
+            <span class="price-value">R$ ${p.preco}</span>
             <span class="price-label">por m²</span>
           </div>
           <div class="card-actions">
-            <a class="btn btn-ghost" href="${waLink(msg)}" target="_blank" rel="noopener">Compartilhar</a>
-            <a class="btn btn-brass" href="${waLink(msg)}" target="_blank" rel="noopener">Pedir orçamento</a>
+            <button type="button" class="btn btn-ghost" data-idx="${idx}" data-action="compartilhar">Compartilhar</button>
+            <button type="button" class="btn btn-brass" data-idx="${idx}" data-action="orcamento">Pedir orçamento</button>
           </div>
         </div>
-      </div>`;
-  }).join("");
+      </div>`
+  ).join("");
+
+  // um único listener cuida dos cliques nos dois botões de todos os cards
+  grid.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-idx]");
+    if(!btn) return;
+    const p = window.produtosCompartilhaveis[Number(btn.dataset.idx)];
+    if(!p) return;
+    await compartilharComImagem(p.img, p.nome, p.msg);
+  });
+}
+
+// Tenta compartilhar foto + texto juntos (funciona em celular, via app do WhatsApp).
+// Se o navegador não suportar, cai para o link de texto no wa.me.
+async function compartilharComImagem(imgUrl, nome, texto){
+  try{
+    const resp = await fetch(imgUrl);
+    const blob = await resp.blob();
+    const file = new File([blob], nome.replace(/\s+/g, "_") + ".jpg", { type: blob.type || "image/jpeg" });
+
+    if(navigator.canShare && navigator.canShare({ files: [file] })){
+      await navigator.share({ files: [file], title: nome, text: texto });
+      return;
+    }
+  }catch(e){
+    console.warn("Compartilhamento com imagem indisponível neste navegador, abrindo apenas o texto.", e);
+  }
+  window.open(waLink(texto), "_blank");
 }
 
 async function carregarAmbientes(){
